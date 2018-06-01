@@ -18,7 +18,6 @@ import (
   "fmt"
   "os"
 
-  homedir "github.com/mitchellh/go-homedir"
   "github.com/spf13/cobra"
   "github.com/spf13/viper"
 )
@@ -27,8 +26,8 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-  Use:   "radtest",
-  Short: "A brief description of your application",
+  Use:   "rad",
+  Short: "A companion CLI for EngineNiRad",
   Long: `A longer description that spans multiple lines and likely contains
 examples and usage of using your application. For example:
 
@@ -55,7 +54,7 @@ func init() {
   // Here you will define your flags and configuration settings.
   // Cobra supports persistent flags, which, if defined here,
   // will be global for your application.
-  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.radtest.yaml)")
+  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is rad.yml)")
 
   // Cobra also supports local flags, which will only run
   // when this action is called directly.
@@ -68,16 +67,7 @@ func initConfig() {
     // Use config file from the flag.
     viper.SetConfigFile(cfgFile)
   } else {
-    // Find home directory.
-    home, err := homedir.Dir()
-    if err != nil {
-      fmt.Println(err)
-      os.Exit(1)
-    }
-
-    // Search config in home directory with name ".radtest" (without extension).
-    viper.AddConfigPath(home)
-    viper.SetConfigName(".radtest")
+    viper.SetConfigName("rad.yml")
   }
 
   viper.AutomaticEnv() // read in environment variables that match

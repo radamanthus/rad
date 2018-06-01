@@ -14,7 +14,7 @@
 
 package main
 
-import "radtest/cmd"
+import "rad/cmd"
 
 func main() {
   cmd.Execute()
