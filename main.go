@@ -17,5 +17,5 @@ package main
 import "radtest/cmd"
 
 func main() {
-	cmd.Execute()
+  cmd.Execute()
 }
