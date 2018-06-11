@@ -2,6 +2,8 @@ package cmd
 
 import (
   "fmt"
+  "log"
+  "os/exec"
 
   "github.com/spf13/cobra"
 )
@@ -21,6 +23,12 @@ var initCmd = &cobra.Command{
   `,
   Run: func(cmd *cobra.Command, args []string) {
     fmt.Println("Rad CLI tool v0.1")
-    fmt.Println("initializing the environment...")
+    fmt.Println("Initializing the environment...")
+    initCommand := exec.Command("terraform", "init", "-input=false")
+    // TODO: the command output should be stored in a log for easier troubleshooting
+    initError := initCommand.Run()
+    if initError != nil {
+      log.Fatal(initError)
+    }
   },
 }

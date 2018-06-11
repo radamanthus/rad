@@ -30,10 +30,11 @@ var destroyCmd = &cobra.Command{
     confirmation, _ := reader.ReadString('\n')
     if strings.EqualFold("yes\n", confirmation) {
       fmt.Println("Really terminating...")
-      cmd := exec.Command("terraform", "destroy", "-auto-approve")
-      err := cmd.Run()
-      if err != nil {
-        log.Fatal(err)
+      destroyCommand := exec.Command("terraform", "destroy", "-auto-approve")
+      // TODO: the command output should be stored in a log for easier troubleshooting
+      destroyError := destroyCommand.Run()
+      if destroyError != nil {
+        log.Fatal(destroyError)
       }
     }
   },
