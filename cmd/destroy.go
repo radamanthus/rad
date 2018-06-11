@@ -1,7 +1,12 @@
 package cmd
 
 import (
+  "bufio"
   "fmt"
+  "log"
+  "os"
+  "os/exec"
+  "strings"
 
   "github.com/spf13/cobra"
 )
@@ -17,6 +22,19 @@ var destroyCmd = &cobra.Command{
   `,
   Run: func(cmd *cobra.Command, args []string) {
     fmt.Println("Rad CLI tool v0.1")
-    fmt.Println("Destroying the environment...")
+    fmt.Println("WARNING! This will destroy the environment.")
+    fmt.Println("There is no undo.")
+    fmt.Println("To confirm that you wish to proceed, please type yes: ")
+
+    reader := bufio.NewReader(os.Stdin)
+    confirmation, _ := reader.ReadString('\n')
+    if strings.EqualFold("yes\n", confirmation) {
+      fmt.Println("Really terminating...")
+      cmd := exec.Command("terraform", "destroy", "-auto-approve")
+      err := cmd.Run()
+      if err != nil {
+        log.Fatal(err)
+      }
+    }
   },
 }
