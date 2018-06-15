@@ -1,0 +1,6 @@
+parse rad.yml and regenerate configure.sh is used in both the init and update commands.
+
+TODO: Put this in a reusable module
+
+- parse rad.yml
+- for each variable, replace the appropriate strings in configure.sh
